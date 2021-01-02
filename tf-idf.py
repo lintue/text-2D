@@ -1,9 +1,10 @@
-"""Process dataset for visualisation.
+"""Preprocess dataset for visualisation.
 
 Extract text from CSV,
 tokenise by n-grams,
 compute TF*IDF,
-output distance matrix.
+output distance matrix,
+encode to JSON.
 
 pixel-tree, 2020."""
 
@@ -52,7 +53,7 @@ def main():
         # Data -- default to first column if no index given.
         data_col = (args.index[0] - 1) if args.index else 0
         # Labels -- default to second column if no index given.
-        labels_col = (args.index[1] - 1) if args.index else 5
+        labels_col = (args.index[1] - 1) if args.index else 1
         # Loop through data and append to lists.
         data = []
         labels = []
@@ -99,4 +100,5 @@ if __name__ == "__main__":
     if args.data:
         main()
     else:
-        sys.exit("\n" + "ERROR: Input data!" + "\n")
+        sys.exit("\n" + "ERROR: Input data! \
+                 Run tf-idf.py --help for details." + "\n")
