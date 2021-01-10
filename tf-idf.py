@@ -3,7 +3,7 @@
 Extract text from CSV,
 tokenise by n-grams,
 compute TF*IDF,
-output distance matrix,
+output cosine similarity matrix,
 encode to JSON.
 
 pixel-tree, 2020."""
@@ -85,11 +85,11 @@ def main():
                                  norm="l2")
     X = vectoriser.fit_transform(data)
     print("TF*IDF matrix dims:", X.shape, "\n")
-    # Dot product of TF*IDF vectors. Create distance matrix.
+    # Dot product of TF*IDF vectors. Cosine similarity matrix.
     D = np.dot(X, X.T).todense()
     # Serialisation: output JSON.
     map = {"distances": D, "labels": labels}
-    with open("output.json", "w") as json_file:
+    with open("tf-idf.json", "w") as json_file:
         json.dump(map, json_file, cls=JSON, indent=4)
         json_file.close()
     print("Distance matrix saved as JSON." + "\n")
