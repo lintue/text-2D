@@ -86,13 +86,14 @@ def main():
     X = vectoriser.fit_transform(data)
     print("TF*IDF matrix dims:", X.shape, "\n")
     # Dot product of TF*IDF vectors. Cosine similarity matrix.
+    print("Computing cosine similarity matrix." + "\n")
     D = np.dot(X, X.T).todense()
     # Serialisation: output JSON.
     map = {"distances": D, "labels": labels}
-    with open("tf-idf.json", "w") as json_file:
+    with open("output.json", "w") as json_file:
         json.dump(map, json_file, cls=JSON, indent=4)
         json_file.close()
-    print("Distance matrix saved as JSON." + "\n")
+    print("Matrix encoded to JSON." + "\n")
 
 
 if __name__ == "__main__":
