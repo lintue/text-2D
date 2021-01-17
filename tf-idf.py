@@ -46,7 +46,8 @@ class JSON(json.JSONEncoder):
 
 def main():
     # Read data from CSV.
-    # Return list with dims [n,] where n is total number of samples.
+    # Return lists with dims [n,] where n is total number of samples.
+    # OPTIONAL: include metadata, in which case read relevant comments below.
     with open(args.data, "r") as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         next(reader, None)  # Skip header.
@@ -57,23 +58,28 @@ def main():
         # Loop through data and append to lists.
         data = []
         labels = []
+        # OPTIONAL: if including metadata, add empty lists for each, as above.
         for rows in reader:
             data.append(rows[data_col])
             labels.append(rows[labels_col])
+            # OPTIONAL: if including metadata, add append functions, as above.
         print("\n" + "Successfully read", len(data), "items." + "\n")
         # Remove duplicates if parameter -c included.
         if args.clean is True:
             counter = 0
             unique = []
             u_labels = []
+            # OPTIONAL: if including metadata, add empty lists, as above.
             for i in data:
                 if i not in unique:
                     unique.append(i)
                     u_labels.append(labels[counter])
+                    # OPTIONAL: if including metadata, add append functions.
                 counter += 1
             print("Removed", (len(data) - len(unique)), "duplicate entries." + "\n")
             data = unique
             labels = u_labels
+            # OPTIONAL: if including metadata, replace variables, as above.
 
     # N-grams.
     # L2 normalised TF*IDF.
@@ -85,15 +91,16 @@ def main():
                                  norm="l2")
     X = vectoriser.fit_transform(data)
     print("TF*IDF matrix dims:", X.shape, "\n")
-    # Dot product of TF*IDF vectors. Cosine similarity matrix.
+    # Dot product of TF*IDF vectors -> cosine similarity matrix.
     print("Computing cosine similarity matrix." + "\n")
     D = np.dot(X, X.T).todense()
     # Serialisation: output JSON.
-    map = {"distances": D, "labels": labels}
-    with open("output.json", "w") as json_file:
+    # OPTIONAL: if including metadata, add keys to dictionary below.
+    map = {"similarity": D, "labels": labels}
+    with open("similarity.json", "w") as json_file:
         json.dump(map, json_file, cls=JSON, indent=4)
         json_file.close()
-    print("Matrix encoded to JSON." + "\n")
+    print("Encoded to JSON." + "\n")
 
 
 if __name__ == "__main__":

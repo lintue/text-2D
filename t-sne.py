@@ -5,7 +5,7 @@ Extract data from JSON,
 run t-SNE,
 output coordinate matrix,
 plot in 2D,
-save data to CSV.
+save to CSV.
 
 pixel-tree, 2020."""
 
@@ -28,11 +28,11 @@ parser.add_argument("-d", "--data",
                           e.g., ./data/cats.json")
 parser.add_argument("-t", "--test",
                     action="store_true",
-                    help="Enter test mode (nonrandom initialisation), \
+                    help="Test mode (nonrandom initialisation), \
                           i.e., reproducible results.")
 parser.add_argument("-s", "--save",
                     action="store_true",
-                    help="Include to save data.")
+                    help="Save data to CSV.")
 args = parser.parse_args()
 
 
@@ -41,20 +41,26 @@ def main():
     # Return NumPy array.
     with open(args.data, "r") as json_file:
         data = json.load(json_file)
-        # Distances.
-        X = np.asarray(data["distances"])
+        # Similarity values.
+        X = np.asarray(data["similarity"])
         # Labels.
         Y = np.asarray(data["labels"])
+
+        # OPTIONAL: include metadata and/or enumerate labels...
+        # ... but modify CSV writer (lines 89-94) accordingly.
+        # Examples below.
+        # Metadata (include extra columns, titles and Z in CSV writer.)
+        # e.g. Z = np.asarray([data["titles"], data["authors"], data["years"]])
         # Map labels to numerical IDs.
-        label_ids = {"Digital Economies": "1",
-                     "Digital Knowledge and Culture": "2",
-                     "Digital Politics and Government": "3",
-                     "Education, Digital Life and Wellbeing": "4",
-                     "Ethics and Philosophy of Information": "5",
-                     "Information Geography and Inequality": "6",
-                     "Information Governance and Security": "7"}
+        label_ids = {"My label 1": "1",
+                     "My label 2": "2",
+                     "My label 3": "3",
+                     "My label 4": "4",
+                     "My label 5": "5",
+                     "My label 6": "6"}
         # Iterate through labels and replace with IDs.
-        # TO DO: find a simpler way to do this?
+        # TO DO: find a simpler way to do this...
+        # ... and find unique labels automatically?
         for i in range(len(Y)):
             for key, value in label_ids.items():
                 Y[i] = Y[i].replace(key, value)
@@ -81,9 +87,12 @@ def main():
                       ).fit_transform(X)
 
     # Output data to CSV.
-    with open('tsne.csv', 'w') as csv_file:
+    with open('t-sne.csv', 'w') as csv_file:
+        # OPTIONAL: if including metadata, add columns ,{} and headers below.
         csv_file.write("{},{},{}\n".format("x", "y", "labels"))
+        # OPTIONAL: if including metadata, add Z[0], Z[1], ..., Z[n] in zip().
         for i in zip(X_embedded.T[0], X_embedded.T[1], Y):
+            # OPTIONAL: if including metadata, add i[3], i[4], ..., i[n].
             csv_file.write("{},{},{}\n".format(i[0], i[1], i[2]))
     print("Coordinates saved as CSV." + "\n")
 
@@ -96,7 +105,7 @@ def main():
     plt.title('t-SNE visualisation')
     plt.xlabel('x')
     plt.ylabel('y')
-    args.save and plt.savefig("tsne.png")
+    args.save and plt.savefig("t-sne.png")
     plt.show()
 
 
