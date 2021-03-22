@@ -1,7 +1,5 @@
 # text-2D
 
-TO DO: documentation.
-
 **tf-idf.py**
 
 Preprocess dataset.
