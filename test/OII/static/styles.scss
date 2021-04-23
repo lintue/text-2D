@@ -31,7 +31,7 @@ body, #playground {
 #subtitle {
 	color: $white;
 	font-family: $H;
-	font-size: max(7px, min(0.8vw, 12px));
+	font-size: max(6px, min(0.75vw, 12px));
 	text-align: left;
 	padding-top: 3vh;
 	text-transform: uppercase;
@@ -159,14 +159,12 @@ a:hover {
 	padding-bottom: 3px;
 	font-family: $B;
 	font-weight: bold;
-	text-align: justify;
 	font-size: 13.5px;
 	line-height: normal;
 }
 
 #labelAuthors {
 	font-family: $B;
-	text-align: justify;
 	font-size: 12px;
 	line-height: normal;
 	padding-top: 3px;
