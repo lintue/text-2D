@@ -22,11 +22,19 @@ body, #playground {
 	margin: 0;
 	color: $white;
 	font-family: $H;
-	font-size: 1.8vw;
+	font-size: max(15px, min(1.8vw, 30px));
 	text-align: left;
 	left: 1vw;
   top: 1vh;
-	max-width: 210px;
+}
+
+#subtitle {
+	color: $white;
+	font-family: $H;
+	font-size: max(7px, min(0.8vw, 12px));
+	text-align: left;
+	padding-top: 3vh;
+	text-transform: uppercase;
 }
 
 #footer {
@@ -150,7 +158,7 @@ a:hover {
 #labelTitle {
 	padding-bottom: 3px;
 	font-family: $B;
-	font-style: italic;
+	font-weight: bold;
 	text-align: justify;
 	font-size: 13.5px;
 	line-height: normal;

@@ -144,6 +144,10 @@ class Vis {
 
     })
 
+    /**
+     * Text.
+     */
+
     // Generate text.
     for (let i = 0; i < data.vis.length; i++) {
 
@@ -157,20 +161,6 @@ class Vis {
           let paragraph = document.createElement('p')
           paragraph.innerHTML = data.vis[i].body[j]
           section.appendChild(paragraph)
-      }
-
-      // Replace markers {index} with visual media.
-      if (typeof data.vis[i].media !== "undefined"
-      && data.vis[i].media.length > 0) {
-        for (let j = 0; j < data.vis[i].media.length; j++) {
-          let path = Object.values(data.vis[i].media[j])
-          let alt = Object.keys(data.vis[i].media[j])
-          let replacement = section.innerHTML.replace(
-            '{' + (j + 1) + '}',
-            '<img class="image" src="' + path + '" alt="' + alt + '">'
-          )
-          section.innerHTML = replacement
-        }
       }
 
       // Replace markers [index] with links.

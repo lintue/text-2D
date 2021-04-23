@@ -16,6 +16,15 @@ if (env === 'development') { console.log('Development mode.') }
 
 const data = require('../media/data.json')
 
+const math = document.createElement('script')
+math.type = 'text/javascript'
+math.id = 'MathJax-script'
+math.async = true
+math.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+document.head.appendChild(math)
+
+const $ = require('jquery')
+
 /* Main frames */
 
 const playground = document.createElement('div')
@@ -28,8 +37,24 @@ playground.appendChild(scrollbox)
 
 const title = document.createElement('h1')
 title.id = 'title'
-title.innerText = data.title
+title.innerText = data.title[0]
 playground.appendChild(title)
+
+const subtitle = document.createElement('div')
+subtitle.id = 'subtitle'
+subtitle.innerText = data.title[1]
+title.appendChild(subtitle)
+
+// Toggle subtitle opacity on scroll.
+$(document).ready(function() {
+  $('#content').scroll(function() {
+    if ($('#content').scrollTop() > 0) {
+      $('#subtitle').fadeOut()
+    } else {
+      $('#subtitle').show()
+    }
+  })
+})
 
 const footer = document.createElement('a')
 footer.setAttribute('href', 'https://github.com/pixel-tree/licenses/blob/main/MIT-2020')

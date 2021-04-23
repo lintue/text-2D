@@ -1,6 +1,9 @@
 {
 
-  "title": "text-2D test",
+  "title": [
+    "text-2D test",
+    "(scroll down for details)"
+  ],
 
   "footer": "© 2021 pixel-tree MIT",
 
@@ -14,7 +17,8 @@
     {
       "id": "textB",
       "body": [
-        "This interactive graph can be used to explore thematic overlaps in OII research across groups. Each data point represents an individual research document. Click on labels (bottom right) to highlight a group, and hover over data for publication details. The method is described below."
+        "This interactive graph can be used to explore thematic overlaps across research groups at the Oxford Internet Institute. (Note: I'm not affiliated with the OII and the documents presented here represent only a portion of their work.)",
+        "Each data point represents an individual research article. Click on labels (bottom right) to highlight a group, and hover over data for publication details. The method is described below."
       ]
     },
     {
@@ -24,35 +28,40 @@
       ],
       "links": [
         {
-          "Link to GitHub repository including code and data.": "https://github.com/pixel-tree/text-2D"
+          "Link to GitHub repository (code and data).": "https://github.com/pixel-tree/text-2D"
         }
       ]
     },
     {
       "id": "textH",
       "body": [
-        "1. TF*IDF"
+        "1. TF*IDF (using [1])"
+      ],
+      "links": [
+        {
+          "scikit-learn": "https://scikit-learn.org/stable/about.html#citing-scikit-learn"
+        }
       ]
     },
     {
       "id": "textB",
       "body": [
-        "The dataset contains 900 abstracts, processed using the TF*IDF algorithm to produce scores that represent the relevance of words in documents.",
-        "The algorithm tokenises the corpus by n-grams (unigrams and bigrams: a feature dimension is allocated for each unique word and combination of two consecutive words; excludes English stop words and words which sit outside of set frequency thresholds). Results in a sparse matrix, X, with shape 900 (total number of samples, that is, abstracts) x 13000+ (total number of n-grams).",
-        "The term-frequency of each n-gram is recorded in the columns of X, and this is repeated for each document. These values are multiplied by “global term weights” -- logarithmically scaled fractions which penalise for high term-frequency across the corpus. Consequently, the highest score is obtained when there is high local frequency (abstract-specific count) and low global prevalence (dataset-wide), which makes sense in terms of categorisation (as we wish to de-emphasise words occurring frequently across the corpus).",
-        "TF*IDF formula used here:",
-        "tf(t, d) * idf(t), where",
-        "idf(t) = log{ n / dt(t) } + 1",
-        "where n is the total number of documents and df(t) the total number of documents in which the n-gram occurs. The constant is added to the denominator to avoid any potential zero divisions.",
-        "The vectors are L2 normalised, i.e., the square root of the sum of the squares of the TF*IDF scores for each document add up to 1. Thus, we have a similarity measure, namely, Euclidean distance. Furthermore, we compute a cosine similarity matrix by taking dot products of vectors in X and X.T(ransposed). The cosine similarity formula is given below.",
-        "cosine(theta) = (a · b) / (|a| * |b|)",
-        "where a and b are arbitrary vectors and theta represents the angle between them.",
-        "Note that, as the feature dimensions are assumed to be orthogonal, vector magnitude, |v|, is given by sqrt(the sum of the squares of its components), which, due to L2 normalisation = 1. Therefore, we have",
-        "cosine(theta) = X[i] · X.T[i]",
-        "where X[i] is a vector in X.",
-        "Result: 900 vectors in |R^900, where the values relate to angles between vectors (a representation of similarity in language).",
-        "Due to its high dimensionality, it is hard to imagine what the vector space looks like -- making it difficult to assess the most appropriate (dis)similarity measure. Intuitively, orientation feels more informative than distance, as vectors could be pointing in opposing directions yet be equal in distance (from origin).",
-        "(This experiment has inspired me to write a future blog post on Euclidean distance and cosine similarity in relation to modelling social data, as I actually know very little about how they are used, and find them quite mesmerising!)"
+        "The dataset consists of 900 publication abstracts. These are processed using the term frequency--inverse document frequency (TF*IDF) algorithm to produce scores that represent the relevance of words in documents.",
+        "The algorithm tokenises the corpus by n-grams (unigrams and bigrams -- a feature dimension is allocated for each unique word and combination of two consecutive words). This excludes English stop words as well as words which sit outside of set frequency thresholds.",
+        "N-gram frequency is recorded for each document, resulting in a sparse matrix, \\(\\mathbf{X}\\), with shape 900 (total number of samples; that is, abstracts) x 13000+ (total number of unique features). These values are multiplied by “global term weights” -- logarithmically scaled fractions that penalise for high term frequency across the corpus. Consequently, the highest score is obtained when there exists high local frequency (abstract-specific count) and low global prevalence (dataset-wide), which makes sense in terms of categorisation (we wish to de-emphasise words occurring frequently across the corpus).",
+        "The TF*IDF formula used here (computed feature by feature for every document in the dataset):",
+        "\\[tf(t, d) * idf(t),\\]",
+        "where \\(tf(t, d)\\) represents n-gram frequency for any given document and",
+        "\\[idf(t) = \\log{\\frac{1 + N}{1 + df(t)}} + 1,\\]",
+        "where \\(N\\) represents the total number of documents. Note that the constant is added to avoid zero divisions.",
+        "The vectors are L2 normalised (i.e., the square root of the sum of the squares of the TF*IDF scores sum to 1 for each document). Thus, we have a similarity measure, namely, Euclidean distance.",
+        "Furthermore, we compute a cosine similarity matrix by taking dot products of vectors in \\(\\mathbf{X}\\) and \\(\\mathbf{X}^T\\)(ransposed). The formula is given below.",
+        "\\[\\cos(\\theta) = \\frac{(\\mathbf{a} \\cdot \\mathbf{b})}{\\lvert \\mathbf{a} \\rvert \\lvert \\mathbf{b} \\rvert}\\]",
+        "where \\(\\mathbf{a}\\) and \\(\\mathbf{b}\\) are arbitrary vectors and \\(\\theta\\) represents the angle between them.",
+        "Note that, as the feature dimensions are assumed to be orthogonal, vector magnitude, say \\(\\lvert \\mathbf{x} \\rvert\\), is given by \\(\\sqrt{\\mathbf{x}_1^2 + \\mathbf{x}_2^2 + \\mathbf{x}_3^2 + ...}\\), which due to L2 normalisation is equal to 1. Therefore, we have that",
+        "\\[\\cos(\\theta) = \\mathbf{X}_i \\cdot \\mathbf{X}_i^T \\]",
+        "where \\(\\mathbf{X}_i\\) is a vector in \\(\\mathbf{X}\\).",
+        "Result: 900 vectors in \\(\\mathbb{R}^{900}\\), where the values relate to angles between vectors (i.e., between individual research documents). This is a representation of similarity in language."
       ]
     },
     {
@@ -83,7 +92,15 @@
     {
       "id": "textH",
       "body": [
-        "4. Visualised above using D3.js"
+        "4. Visualised above using [1] (in-text maths typset using [2])"
+      ],
+      "links": [
+        {
+          "D3.js": "https://d3js.org"
+        },
+        {
+          "MathJax": "https://www.mathjax.org"
+        }
       ]
     }
   ]
