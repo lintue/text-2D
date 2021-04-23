@@ -1,0 +1,248 @@
+/* Variables */
+
+$black: rgb(10, 10, 10);
+$white: rgb(255, 255, 255);
+$graphcol: rgb(201, 213, 255);
+
+$H: 'Source Code Pro', monospace;
+$B: 'Source Sans Pro', sans;
+
+body, #playground {
+	min-width: 100vw;
+	min-height: 100vh;
+	position: absolute;
+	margin: 0;
+	background-color: $black;
+  overflow: hidden;
+	text-shadow: 0.6px 0.6px $graphcol;
+}
+
+#title {
+	position: fixed;
+	margin: 0;
+	color: $white;
+	font-family: $H;
+	font-size: 1.8vw;
+	text-align: left;
+	left: 1vw;
+  top: 1vh;
+	max-width: 210px;
+}
+
+#footer {
+	position: fixed;
+  left: 1vw;
+  bottom: 1vh;
+	font-family: $H;
+	font-size: 10px;
+	color: $white;
+}
+
+a {
+	font-family: $H;
+	text-decoration: none;
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#scrollbox {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+  background-color: transparent;
+}
+
+#scrollbox::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 15px;
+  width: 100%;
+  background: linear-gradient(to bottom, transparent, $black);
+}
+
+#content {
+  max-width: 1200px;
+	width: 70%;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 45px;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+	a {
+		font-family: $B;
+		color: $graphcol;
+	}
+}
+
+#content::-webkit-scrollbar {
+  display: none;
+}
+
+#content::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 45px;
+  width: 100%;
+  background: linear-gradient(to top, transparent, $black);
+}
+
+#tSNE {
+	max-width: 1200px;
+	max-height: 900px;
+	margin-bottom: 15vh;
+}
+
+#legend {
+	position: absolute;
+	right: 1vw;
+	bottom: 1vh;
+	font-family: $H;
+	color: $white;
+	font-size: 9px;
+}
+
+.legendLabel {
+	display: block;
+	border: 1px solid $white;
+	border-radius: 3px;
+	padding: 5px;
+	margin-bottom: 0.5vh;
+	cursor: pointer;
+	opacity: 0.9;
+}
+
+.legendLabel:hover {
+	opacity: 1;
+}
+
+.labelActive {
+	opacity: 1;
+	border: 1px solid $graphcol;
+}
+
+#label {
+	opacity: 0;
+	max-width: 18vw;
+	position: absolute;
+	border: 1px solid;
+	border-radius: 3px;
+	padding: 5px;
+	background-color: $white;
+	p {
+		margin: 0;
+	}
+}
+
+#labelTitle {
+	padding-bottom: 3px;
+	font-family: $B;
+	font-style: italic;
+	text-align: justify;
+	font-size: 13.5px;
+	line-height: normal;
+}
+
+#labelAuthors {
+	font-family: $B;
+	text-align: justify;
+	font-size: 12px;
+	line-height: normal;
+	padding-top: 3px;
+}
+
+#labelMeta {
+	font-family: $H;
+	text-transform: uppercase;
+	text-align: left;
+	font-size: 9px;
+	line-height: normal;
+	word-wrap: break-word;
+	padding-top: 9px;
+}
+
+.textH {
+	margin: 0;
+	max-width: 600px;
+	width: 50vw;
+	margin-left: 5vw;
+	color: $white;
+	font-family: $H;
+	font-size: 13px;
+	text-align: left;
+	padding-top: 15px;
+}
+
+.textB {
+	p {
+		margin: 0;
+		max-width: 600px;
+		width: 50vw;
+		margin-left: 5vw;
+    text-align: justify;
+    font-family: $B;
+		font-size: 15px;
+		line-height: 21px;
+		letter-spacing: 0.1px;
+    color: $white;
+		padding-bottom: 10px;
+  }
+}
+
+/* Mobile, etc. */
+
+@media only screen and (max-width: 768px) {
+
+	#footer {
+		transform: rotate(-90deg);
+		transform-origin: left top;
+		font-size: 6px;
+	}
+
+	#scrollbox {
+		align-items: flex-end;
+	}
+
+	#content {
+		width: 70vw;
+	  padding-right: 3vw;
+		padding-bottom: 1vh;
+	}
+
+	#tSNE {
+		width: 70vw;
+	}
+
+	#legend {
+		left: 1vw;
+		top: 15vh;
+		font-size: 6px;
+		width: 60px;
+	}
+
+	.textH {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.textB {
+		p {
+			width: 100%;
+			margin-left: 0;
+	  }
+	}
+
+}

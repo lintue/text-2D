@@ -1,5 +1,7 @@
 .DS_Store
-mod/
+hidden
+build
+node_modules
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

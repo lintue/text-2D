@@ -1,0 +1,91 @@
+{
+
+  "title": "text-2D test",
+
+  "footer": "© 2021 pixel-tree MIT",
+
+  "vis": [
+    {
+      "id": "textH",
+      "body": [
+        "t-SNE visualisation of OII research"
+      ]
+    },
+    {
+      "id": "textB",
+      "body": [
+        "This interactive graph can be used to explore thematic overlaps in OII research across groups. Each data point represents an individual research document. Click on labels (bottom right) to highlight a group, and hover over data for publication details. The method is described below."
+      ]
+    },
+    {
+      "id": "textH",
+      "body": [
+        "[1]"
+      ],
+      "links": [
+        {
+          "Link to GitHub repository including code and data.": "https://github.com/pixel-tree/text-2D"
+        }
+      ]
+    },
+    {
+      "id": "textH",
+      "body": [
+        "1. TF*IDF"
+      ]
+    },
+    {
+      "id": "textB",
+      "body": [
+        "The dataset contains 900 abstracts, processed using the TF*IDF algorithm to produce scores that represent the relevance of words in documents.",
+        "The algorithm tokenises the corpus by n-grams (unigrams and bigrams: a feature dimension is allocated for each unique word and combination of two consecutive words; excludes English stop words and words which sit outside of set frequency thresholds). Results in a sparse matrix, X, with shape 900 (total number of samples, that is, abstracts) x 13000+ (total number of n-grams).",
+        "The term-frequency of each n-gram is recorded in the columns of X, and this is repeated for each document. These values are multiplied by “global term weights” -- logarithmically scaled fractions which penalise for high term-frequency across the corpus. Consequently, the highest score is obtained when there is high local frequency (abstract-specific count) and low global prevalence (dataset-wide), which makes sense in terms of categorisation (as we wish to de-emphasise words occurring frequently across the corpus).",
+        "TF*IDF formula used here:",
+        "tf(t, d) * idf(t), where",
+        "idf(t) = log{ n / dt(t) } + 1",
+        "where n is the total number of documents and df(t) the total number of documents in which the n-gram occurs. The constant is added to the denominator to avoid any potential zero divisions.",
+        "The vectors are L2 normalised, i.e., the square root of the sum of the squares of the TF*IDF scores for each document add up to 1. Thus, we have a similarity measure, namely, Euclidean distance. Furthermore, we compute a cosine similarity matrix by taking dot products of vectors in X and X.T(ransposed). The cosine similarity formula is given below.",
+        "cosine(theta) = (a · b) / (|a| * |b|)",
+        "where a and b are arbitrary vectors and theta represents the angle between them.",
+        "Note that, as the feature dimensions are assumed to be orthogonal, vector magnitude, |v|, is given by sqrt(the sum of the squares of its components), which, due to L2 normalisation = 1. Therefore, we have",
+        "cosine(theta) = X[i] · X.T[i]",
+        "where X[i] is a vector in X.",
+        "Result: 900 vectors in |R^900, where the values relate to angles between vectors (a representation of similarity in language).",
+        "Due to its high dimensionality, it is hard to imagine what the vector space looks like -- making it difficult to assess the most appropriate (dis)similarity measure. Intuitively, orientation feels more informative than distance, as vectors could be pointing in opposing directions yet be equal in distance (from origin).",
+        "(This experiment has inspired me to write a future blog post on Euclidean distance and cosine similarity in relation to modelling social data, as I actually know very little about how they are used, and find them quite mesmerising!)"
+      ]
+    },
+    {
+      "id": "textH",
+      "body": [
+        "2. PCA"
+      ]
+    },
+    {
+      "id": "textB",
+      "body": [
+        "We reduce complexity with PCA: a linear mapping of the data to lower dimensions, while preserving properties of global structure. The first 50 principal components are included (where we assume that variance = signal).",
+        "On the OII dataset, running PCA before t-SNE resulted in more defined clusters."
+      ]
+    },
+    {
+      "id": "textH",
+      "body": [
+        "3. t-SNE"
+      ]
+    },
+    {
+      "id": "textB",
+      "body": [
+        "Embed data into 2-D with t-SNE. Focus on neighbourhood structure, where we have various parameters to guide clustering behaviour."
+      ]
+    },
+    {
+      "id": "textH",
+      "body": [
+        "4. Visualised above using D3.js"
+      ]
+    }
+  ]
+
+}
