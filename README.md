@@ -20,3 +20,5 @@ run t-SNE,\
 output coordinate matrix,\
 plot in 2D,\
 save to CSV.
+
+**Live demo and details:** http://34.121.78.114/
