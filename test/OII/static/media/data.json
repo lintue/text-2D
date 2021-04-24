@@ -63,7 +63,7 @@
         "One nice thing here: the feature dimensions are assumed to be orthogonal, so vector magnitude, \\(\\lvert \\mathbf{x} \\rvert\\), is given by \\(\\sqrt{\\mathbf{x}_1^2 + \\mathbf{x}_2^2 + ... + \\mathbf{x}_n^2}\\) (and due to L2 norm this is equal to 1). Therefore, in the above formula we divide by \\(\\lvert \\mathbf{a} \\rvert \\lvert \\mathbf{b} \\rvert = 1 \\times 1 = 1\\), and we have that",
         "\\[\\cos(\\theta) = \\mathbf{X}_i \\cdot \\mathbf{X}_i^T,\\]",
         "where \\(\\mathbf{X}_i\\) is a vector in \\(\\mathbf{X}\\).",
-        "Result: 900 vectors in \\(\\mathbb{R}^{900}\\), where values relate to angles between vectors (i.e., between research documents). And this is a representation of (dis)similarity in language."
+        "Result: symmetric 900x900 matrix, or 900 vectors in \\(\\mathbb{R}^{900}\\), where values relate to angles between vectors (i.e., between research documents). And this is a representation of (dis)similarity in language."
       ]
     },
     {
